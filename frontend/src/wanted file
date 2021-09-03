@@ -1,0 +1,30 @@
+ <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>
+            <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>
+            <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>
+            <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>
+            <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>
+            <li className="navitems">
+              <Link to="/aboutus" className="nav-links">
+                About us
+              </Link>
+            </li>

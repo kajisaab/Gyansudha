@@ -1,0 +1,25 @@
+.cards {
+  background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+}
+
+.desktopcards__container {
+  display: flex;
+  flex-flow: column;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* background-color: black; */
+}
+
+.cards__wrapper {
+  position: relative;
+  margin: 20px 0 45px;
+}
+
+.cards__items {
+  margin: 0px;
+  padding: 0px;
+}

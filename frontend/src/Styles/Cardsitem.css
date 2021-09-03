@@ -1,0 +1,30 @@
+.cards__item {
+  display: flex;
+  flex-direction: row;
+}
+
+.cards__item__img {
+  height: 30vw;
+  border-radius: 20px;
+}
+
+.description {
+  display: block;
+  flex-direction: row;
+  padding: 0;
+}
+
+.title {
+  margin-bottom: -10px;
+}
+
+.paragraph {
+  margin: 0 0 10px 60px;
+  color: black;
+  text-align: justify;
+}
+
+.name {
+  float: right;
+  margin-bottom: 90px;
+}
