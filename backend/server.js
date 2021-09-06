@@ -1,14 +1,12 @@
 const express = require("express");
-
-const feedRoute = require("./routes/feed");
-
+const SchoolDetailsRoute = require("./routes/SchoolDetails");
 const app = express();
-
-// app.use(express.urlencoded()); // for form data
 
 app.use(express.json());
 
-app.use("/feed", feedRoute);
+app.use("/schooldetails", SchoolDetailsRoute);
+
+// app.use(express.urlencoded()); // for form data
 
 // const port =
 //   process.env.NODE_ENV === "production" ? process.env.PORT || 80 : 5000;

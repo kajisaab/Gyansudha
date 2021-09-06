@@ -3,11 +3,21 @@ import styled from "styled-components";
 import "../Styles/Body.css";
 import Cards from "./Cards";
 import Slider from "./Text_Slider/Slider";
+import { useSelector } from "react-redux";
 
 const WelcomeTitle = "Welcome To Gyansudha English School";
 const TitleArray = WelcomeTitle.split("  ");
 
 function Body() {
+  const details = useSelector(function (rootReducers) {
+    return {
+      title: rootReducers.schoolDetailReducer.title,
+      content: rootReducers.schoolDetailReducer.content,
+    };
+  });
+
+  console.log(details.title);
+
   const [size, setSize] = useState(true);
   const [marginsize, setMarginSize] = useState(0);
 
@@ -55,6 +65,7 @@ function Body() {
 
         <div className="content">
           <Cards />
+          {details.content}
         </div>
       </div>
     </>
