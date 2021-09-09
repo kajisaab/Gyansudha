@@ -1,17 +1,19 @@
 import { combineReducers } from "redux";
 
 // create reducer
-const initialschooldetails = {
-  title: "random",
-  content: "This is working",
+const initialSchoolName = {
+  SchoolName: "",
+  logo: "",
 };
-function schoolDetailReducer(state = initialschooldetails, action) {
+function schoolDetailReducer(state = initialSchoolName, action) {
   switch (action.type) {
-    case "UPDATE_DETAILS":
+    case "UPDATE_SCHOOLNAME":
       return {
         ...state,
-        state: action.payload,
+        SchoolName: action.payload.SchoolName,
+        logo: action.payload.logo,
       };
+
     default:
       return state;
   }

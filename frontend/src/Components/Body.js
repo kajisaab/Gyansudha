@@ -3,7 +3,12 @@ import styled from "styled-components";
 import "../Styles/Body.css";
 import Cards from "./Cards";
 import Slider from "./Text_Slider/Slider";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Axios from "axios";
+import {
+  updateSchoolName,
+  updateSchoollogo,
+} from "../Data/actions/schooldetailsaction";
 
 const WelcomeTitle = "Welcome To Gyansudha English School";
 const TitleArray = WelcomeTitle.split("  ");
@@ -11,10 +16,26 @@ const TitleArray = WelcomeTitle.split("  ");
 function Body() {
   const details = useSelector(function (rootReducers) {
     return {
-      title: rootReducers.schoolDetailReducer.title,
-      content: rootReducers.schoolDetailReducer.content,
+      SchoolName: rootReducers.schoolDetailReducer.SchoolName,
+      logo: rootReducers.schoolDetailReducer.logo,
     };
   });
+
+  const dispatch = useDispatch();
+
+  const fetchdata = async () => {
+    const response = await Axios.get(
+      "http://localhost:8080/schooldetails/details"
+    ).catch((err) => {
+      console.log("Err: ", err);
+    });
+
+    dispatch(updateSchoolName(response.data.data));
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
 
   console.log(details.title);
 
@@ -65,7 +86,7 @@ function Body() {
 
         <div className="content">
           <Cards />
-          {details.content}
+          {details.SchoolName}, {details.logo}
         </div>
       </div>
     </>

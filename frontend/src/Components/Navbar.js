@@ -24,22 +24,9 @@ function Navbar() {
     setClick(false);
   };
 
-  // useEffect(() => {
-  //   showDropDown();
-  // }, []);
-
-  // const showDropDown = () => {
-  //   if (window.innerWidth <= 960) {
-  //     setButton(false);
-  //   } else {
-  //     setButton(true);
-  //   }
-  // };
-
   console.log(click);
 
   window.addEventListener("scroll", shrinkNavbar);
-  // window.addEventListener("resize", showDropDown);
 
   return (
     <>

@@ -76,7 +76,7 @@ function Cards() {
       {WordsFromAdministration.map((data, key) => (
         <div
           className={
-            mobileview ? "desktopcards__container" : "mobilecards__container"
+            mobileview ? "mobilecards__container" : "desktopcards__container"
           }
           key={key}
         >

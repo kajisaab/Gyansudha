@@ -1,6 +1,9 @@
 const express = require("express");
 const SchoolDetailsRoute = require("./routes/SchoolDetails");
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
 
 app.use(express.json());
 

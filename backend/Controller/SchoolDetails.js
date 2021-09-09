@@ -1,7 +1,10 @@
 exports.getDetails = (req, res, next) => {
   res.status(200).json({
-    SchoolName: "Gyansudha School",
-    logo: "This is logo",
+    message: "School Details",
+    data: {
+      SchoolName: "Gyansudha School",
+      logo: "This is logo",
+    },
   });
 };
 

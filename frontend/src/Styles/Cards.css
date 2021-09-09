@@ -14,6 +14,14 @@ h1 {
   /* background-color: black; */
 }
 
+.mobilecards__container {
+  display: flex;
+  background-color: black;
+  flex-flow: column;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* background-color: black; */
+}
 .cards__wrapper {
   position: relative;
   margin: 20px 0 45px;

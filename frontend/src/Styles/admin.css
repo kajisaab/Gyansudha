@@ -1,0 +1,11 @@
+.EmailContainer {
+  margin-bottom: 10px;
+  width: 20em;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  border-radius: 15px;
+  text-decoration: none;
+  outline: none;
+}

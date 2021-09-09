@@ -1,7 +1,7 @@
 // update school details;
-export const updateDetails = (details) => {
+export const updateSchoolName = (details) => {
   return {
-    type: "UPDATE_DETAILS",
+    type: "UPDATE_SCHOOLNAME",
     payload: details,
   };
 };
