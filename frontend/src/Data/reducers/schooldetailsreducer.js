@@ -4,6 +4,7 @@ import { combineReducers } from "redux";
 const initialSchoolName = {
   SchoolName: "",
   logo: "",
+  Address: "",
 };
 function schoolDetailReducer(state = initialSchoolName, action) {
   switch (action.type) {
@@ -11,7 +12,8 @@ function schoolDetailReducer(state = initialSchoolName, action) {
       return {
         ...state,
         SchoolName: action.payload.SchoolName,
-        logo: action.payload.logo,
+        logo: action.payload.ImageUrl,
+        Address: action.payload.Address,
       };
 
     default:

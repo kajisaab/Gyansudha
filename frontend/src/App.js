@@ -7,7 +7,8 @@ import aman from "./Components/pages/aman";
 import kaji from "./Components/pages/kaji";
 import khadka from "./Components/pages/khadka";
 import team from "./Components/pages/team";
-import admin from "./admin/admin";
+import AdminLogin from "./Components/admin/AdminLogin";
+
 function App() {
   return (
     <Router>
@@ -18,7 +19,7 @@ function App() {
         <Route path="/kaji" exact component={kaji} />
         <Route path="/khadka" exact component={khadka} />
         <Route path="/team" exact component={team} />
-        <Route path="/admin" exact component={admin} />
+        <Route path="/AdminLogin" exact component={AdminLogin} />
       </Switch>
     </Router>
   );

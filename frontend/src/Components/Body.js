@@ -18,6 +18,7 @@ function Body() {
     return {
       SchoolName: rootReducers.schoolDetailReducer.SchoolName,
       logo: rootReducers.schoolDetailReducer.logo,
+      Address: rootReducers.schoolDetailReducer.Address,
     };
   });
 
@@ -26,11 +27,21 @@ function Body() {
   const fetchdata = async () => {
     const response = await Axios.get(
       "http://localhost:8080/schooldetails/details"
-    ).catch((err) => {
-      console.log("Err: ", err);
-    });
+    )
+      // .then((responsestatus) => {
+      //   if (responsestatus.status !== 200) {
+      //     alert("Failed to fetch the details");
+      //   }
+      //   return responsestatus.json();
+      // })
+      .then((responsedata) => {
+        console.log(responsedata.data);
+        dispatch(updateSchoolName(responsedata.data.data[0]));
+      })
 
-    dispatch(updateSchoolName(response.data.data));
+      .catch((err) => {
+        console.log("Err: ", err);
+      });
   };
 
   useEffect(() => {
@@ -86,7 +97,7 @@ function Body() {
 
         <div className="content">
           <Cards />
-          {details.SchoolName}, {details.logo}
+          {details.SchoolName}, {details.logo}, {details.Address}
         </div>
       </div>
     </>
