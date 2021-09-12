@@ -1,53 +1,140 @@
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import * as yup from "yup";
-
-const validationSchema = yup.object({
-  username: yup.string().required("Required"),
-  password: yup.string().required("Required"),
-});
+import AdminPage from "./AdminPage";
 
 function AdminLogin() {
+  // // const [isAuth, setisAuth] = useState(false);
+  const [authLoading, setauthLoading] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [token, setToken] = useState("");
   const history = useHistory();
+  // const formik = useFormik({
+  //   initialValues: { email: "", password: "" },
+  //   validateOnBlur: true,
+  // validationSchema: validationSchema,
+  //   submit: async (values) => {
+  //     console.log("submit Clicked");
+  //     const data = {
+  //       email: values.email,
+  //       password: values.password,
+  //     };
+  //     setauthLoading(true);
+  //     const respone = await axios
+  //       .post("http://localhost:8080/login/login", data, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then(
+  //         (res) => {
+  //           if (res.status === 422) {
+  //             throw new Error("Validation Failde");
+  //           }
+  //           if (res.status !== 200 && res.status !== 201) {
+  //             console.log("Error");
+  //             throw new Error("Could not authenticate you !");
+  //           }
+  //           return res.json();
+  //         },
+  //         alert("This data is submitting"),
+  //         console.log("this is the login data")
+  //       )
+  //       .then((resData) => {
+  //         console.log(resultdata);
+  //         setauthLoading(false);
+  //         setUserId(resultdata.userId);
+  //         setToken(resultdata.tokne);
+  //         localStorage.setItem("token", resultdata.token);
+  //         localStorage.setItem("userId", resultdata.userId);
+  //         const remaininiMillisecond = 60 * 60 * 100;
+  //         console.log("here working");
+  //         const expriyDate = new Date(
+  //           new Date().getTime() + remaininiMillisecond
+  //         );
+  //         history.push("/AdminPage");
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setauthLoading(false);
+  //         alert("There error occurred  ", err);
+  //       });
+  //   },
+  // });
+
+  const validationSchema = yup.object({
+    email: yup.string().required("Required"),
+    password: yup.string().required("Required"),
+  });
+
+  const onSubmit = async (values) => {
+    console.log("submit Clicked");
+
+    const respone = await axios
+      .post("http://localhost:8080/auth/login", values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.status === 422) {
+          throw new Error("Validation Failed");
+        }
+        if (res.status !== 200 && res.status !== 201) {
+          console.log("Error");
+          throw new Error("Could not authenticate you !");
+        }
+        return res;
+      })
+      .then((resData) => {
+        // console.log(resData);
+        setauthLoading(false);
+        setUserId(resData.userId);
+        setToken(resData.tokne);
+        localStorage.setItem("token", resData.token);
+        localStorage.setItem("userId", resData.userId);
+        const remaininiMillisecond = 60 * 60 * 100;
+        const expriyDate = new Date(
+          new Date().getTime() + remaininiMillisecond
+        );
+        history.push("/AdminPage");
+      })
+      .catch((err) => {
+        // console.log(err);
+        // console.log(err.response.statusText);
+        setauthLoading(false);
+        alert("You are not " + err.response.statusText);
+      });
+  };
+
   const formik = useFormik({
-    initialValues: { username: "", password: "" },
+    initialValues: { email: "", password: "" },
     validateOnBlur: true,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      const respone = await axios
-        .post("http://localhost:8080/login/adminlogin", values)
-        .then(
-          alert("This data is submitting"),
-          history.push("/"),
-          console.log("this is the login data", values)
-        )
-        .catch((err) => {
-          alert("There error occurred  ", err);
-        });
-    },
+    onSubmit,
   });
+
   return (
     <FormContainer onSubmit={formik.handleSubmit}>
       <Text>Welcome To Admin Panel</Text>
       <EmailPassword>
         <h5>
-          Username{" "}
-          {formik.errors.username && formik.touched.username && (
-            <ErrorText>{formik.errors.username}</ErrorText>
+          E-mail{" "}
+          {formik.errors.email && formik.touched.email && (
+            <ErrorText>{formik.errors.email}</ErrorText>
           )}
         </h5>
         <Input
-          name="username"
+          name="email"
           type="text"
-          placeholder="Enter your Username"
-          value={formik.values.username}
+          placeholder="Enter your Email"
+          value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={
-            formik.errors.username && formik.touched.username && "error"
-          }
+          className={formik.errors.email && formik.touched.email && "error"}
         />
 
         <h5>
