@@ -50,7 +50,7 @@ exports.login = (req, res, next) => {
     .then((isEqual) => {
       if (!isEqual) {
         const error = new Error("Wrong Password");
-        error.statusCode = 401;
+        error.statusCode = 402;
         throw error;
       }
       const token = jwt.sign(
@@ -66,7 +66,6 @@ exports.login = (req, res, next) => {
     .catch((err) => {
       if (!err.statusCode) {
         err.statusCode = 500;
-        throw err;
       }
       next(err);
     });

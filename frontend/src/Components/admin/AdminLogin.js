@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import * as yup from "yup";
 import AdminPage from "./AdminPage";
+import { setUserSession } from "../../utils/Common";
+import Modal from "../../Errors/Error";
+import Loading from "./Loading";
 
-function AdminLogin() {
+function AdminLogin(props) {
   // // const [isAuth, setisAuth] = useState(false);
   const [authLoading, setauthLoading] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [token, setToken] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(false);
+  const [errormessage, setErrormessage] = useState(null);
+
   const history = useHistory();
+
+  const openModel = () => {
+    setShowModal((prev) => !prev);
+  };
+
   // const formik = useFormik({
   //   initialValues: { email: "", password: "" },
   //   validateOnBlur: true,
@@ -70,43 +79,62 @@ function AdminLogin() {
     password: yup.string().required("Required"),
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = (values) => {
     console.log("submit Clicked");
+    console.log(JSON.stringify(values.email));
+    console.log(values.password);
+    setauthLoading(true);
 
-    const respone = await axios
-      .post("http://localhost:8080/auth/login", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    })
       .then((res) => {
         if (res.status === 422) {
           throw new Error("Validation Failed");
         }
+        if (res.status === 401) {
+          throw new Error("A user with this email can't be found");
+        }
+        if (res.status === 402) {
+          throw new Error("Wrong Password");
+        }
         if (res.status !== 200 && res.status !== 201) {
           console.log("Error");
-          throw new Error("Could not authenticate you !");
+          throw new Error("Please Check your Credentials !");
         }
-        return res;
+
+        return res.json();
       })
       .then((resData) => {
-        // console.log(resData);
+        console.log(resData);
         setauthLoading(false);
-        setUserId(resData.userId);
-        setToken(resData.tokne);
-        localStorage.setItem("token", resData.token);
-        localStorage.setItem("userId", resData.userId);
+        // ("token", resData.token);
+        setUserSession(resData.token, resData.userId);
         const remaininiMillisecond = 60 * 60 * 100;
         const expriyDate = new Date(
           new Date().getTime() + remaininiMillisecond
         );
-        history.push("/AdminPage");
+
+        props.history.push("/AdminPage");
+
+        // history.push("/AdminPage", token);
       })
       .catch((err) => {
         // console.log(err);
         // console.log(err.response.statusText);
+        // console.log(err);
+        // alert(err.message);
+        setError(true);
         setauthLoading(false);
-        alert("You are not " + err.response.statusText);
+        setErrormessage(err.message);
+        openModel();
       });
   };
 
@@ -118,45 +146,65 @@ function AdminLogin() {
   });
 
   return (
-    <FormContainer onSubmit={formik.handleSubmit}>
-      <Text>Welcome To Admin Panel</Text>
-      <EmailPassword>
-        <h5>
-          E-mail{" "}
-          {formik.errors.email && formik.touched.email && (
-            <ErrorText>{formik.errors.email}</ErrorText>
-          )}
-        </h5>
-        <Input
-          name="email"
-          type="text"
-          placeholder="Enter your Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className={formik.errors.email && formik.touched.email && "error"}
-        />
+    <>
+      {authLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          <FormContainer onSubmit={formik.handleSubmit}>
+            <Text>Welcome To Admin Panel</Text>
+            <EmailPassword>
+              <h5>
+                E-mail{" "}
+                {formik.errors.email && formik.touched.email && (
+                  <ErrorText>{formik.errors.email}</ErrorText>
+                )}
+              </h5>
+              <Input
+                name="email"
+                type="text"
+                placeholder="Enter your Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.email && formik.touched.email && "error"
+                }
+              />
 
-        <h5>
-          Password{" "}
-          {formik.errors.password && formik.touched.password && (
-            <ErrorText>{formik.errors.password}</ErrorText>
-          )}
-        </h5>
-        <Input
-          name="password"
-          type="password"
-          placeholder="Enter your Password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className={
-            formik.errors.password && formik.touched.password && "error"
-          }
-        />
-      </EmailPassword>
-      <SubmitButton type="submit">Submit</SubmitButton>
-    </FormContainer>
+              <h5>
+                Password{" "}
+                {formik.errors.password && formik.touched.password && (
+                  <ErrorText>{formik.errors.password}</ErrorText>
+                )}
+              </h5>
+              <Input
+                name="password"
+                type="password"
+                placeholder="Enter your Password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.password && formik.touched.password && "error"
+                }
+              />
+            </EmailPassword>
+            {/* <Text>{token}</Text> */}
+            <SubmitButton type="submit">Submit</SubmitButton>
+
+            {/* {error === "" ? null : alert(error)} */}
+          </FormContainer>
+          {error ? (
+            <Modal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              errormessage={errormessage}
+            />
+          ) : null}
+        </div>
+      )}
+    </>
   );
 }
 

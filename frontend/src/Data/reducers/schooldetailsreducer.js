@@ -2,18 +2,14 @@ import { combineReducers } from "redux";
 
 // create reducer
 const initialSchoolName = {
-  SchoolName: "",
-  logo: "",
-  Address: "",
+  Schooldetails: [],
 };
 function schoolDetailReducer(state = initialSchoolName, action) {
   switch (action.type) {
     case "UPDATE_SCHOOLNAME":
       return {
         ...state,
-        SchoolName: action.payload.SchoolName,
-        logo: action.payload.ImageUrl,
-        Address: action.payload.Address,
+        Schooldetails: action.payload,
       };
 
     default:

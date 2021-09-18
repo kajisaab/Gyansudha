@@ -8,6 +8,9 @@ import kaji from "./Components/pages/kaji";
 import khadka from "./Components/pages/khadka";
 import team from "./Components/pages/team";
 import AdminLogin from "./Components/admin/AdminLogin";
+import AdminPage from "./Components/admin/AdminPage";
+import PublicRoute from "./utils/PublicRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
   return (
@@ -19,7 +22,8 @@ function App() {
         <Route path="/kaji" exact component={kaji} />
         <Route path="/khadka" exact component={khadka} />
         <Route path="/team" exact component={team} />
-        <Route path="/AdminLogin" exact component={AdminLogin} />
+        <PublicRoute path="/AdminLogin" exact component={AdminLogin} />
+        <PrivateRoute path="/AdminPage" exact component={AdminPage} />
       </Switch>
     </Router>
   );

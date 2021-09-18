@@ -1,30 +1,35 @@
- <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
-            <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
-            <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
-            <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
-            <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
-            <li className="navitems">
-              <Link to="/aboutus" className="nav-links">
-                About us
-              </Link>
-            </li>
+// {
+/* <SchooldetailsContainer>
+        {/* <img src={imageselected} alt="unknown" /> */
+// }
+// <FormContainer>
+//   <input
+//     type="file"
+//     style={{ display: "none" }}
+//     alt="img"
+//     ref={fileInputRef}
+//     accept="images/*"
+//     onChange={(event) => {
+//       const file = event.target.files[0];
+//       if (file && file.type.substr(0, 5) === "image") {
+//         setImage(file);
+//       } else {
+//         setImage(null);
+//       }
+//     }}
+//   />
+//   <ImageContainer>
+//     <Image src={preview} />
+//   </ImageContainer>
+//   <Button
+//     onClick={ImageUploadHandler}
+//     // onClick={(event) => {
+//     //   event.preventDefault();
+//     //   console.log("clicked");
+//     //   fileInputRef.current.click();
+//     // }}
+//   >
+//     Add Image
+//   </Button>
+// </FormContainer>
+// </SchooldetailsContainer>

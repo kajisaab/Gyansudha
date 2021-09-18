@@ -16,27 +16,26 @@ const TitleArray = WelcomeTitle.split("  ");
 function Body() {
   const details = useSelector(function (rootReducers) {
     return {
-      SchoolName: rootReducers.schoolDetailReducer.SchoolName,
-      logo: rootReducers.schoolDetailReducer.logo,
-      Address: rootReducers.schoolDetailReducer.Address,
+      Schooldetails: rootReducers.schoolDetailReducer.Schooldetails,
     };
   });
 
   const dispatch = useDispatch();
 
   const fetchdata = async () => {
-    const response = await Axios.get(
-      "http://localhost:8080/schooldetails/details"
+    const response = await fetch(
+      "http://localhost:8080/schooldetails/details",
+      { method: "GET" }
     )
-      // .then((responsestatus) => {
-      //   if (responsestatus.status !== 200) {
-      //     alert("Failed to fetch the details");
-      //   }
-      //   return responsestatus.json();
-      // })
+      .then((responsestatus) => {
+        if (responsestatus.status !== 200) {
+          alert("Failed to fetch the details");
+        }
+        return responsestatus.json();
+      })
       .then((responsedata) => {
-        console.log(responsedata.data);
-        dispatch(updateSchoolName(responsedata.data.data[0]));
+        console.log(responsedata.data.data);
+        dispatch(updateSchoolName(responsedata.data));
       })
 
       .catch((err) => {
@@ -47,8 +46,6 @@ function Body() {
   useEffect(() => {
     fetchdata();
   }, []);
-
-  console.log(details.title);
 
   const [size, setSize] = useState(true);
   const [marginsize, setMarginSize] = useState(0);
@@ -71,7 +68,22 @@ function Body() {
 
   window.addEventListener("resize", WidthSize);
 
-  console.log(size);
+  // console.log(size);
+
+  // const datalist = details.Schooldetails;
+  // console.log(datalist);
+
+  // Getting the individual post ID
+  const EditHandler = (postid) => {
+    // if (details.Schooldetails.find((p) => p._id === id)) {
+    //   console.log("true");
+    // } else {
+    //   console.log("false");
+    // }
+    const id = details.Schooldetails.find((p) => p._id === postid);
+    console.log(id._id);
+  };
+
   return (
     <>
       <div className="body">
@@ -97,8 +109,15 @@ function Body() {
 
         <div className="content">
           <Cards />
-          {details.SchoolName}, {details.logo}, {details.Address}
         </div>
+        {console.log(details.Schooldetails)}
+        {details.Schooldetails.map((datum, idex) => (
+          <div key={idex}>
+            {console.log(datum.SchoolName)}
+            {EditHandler(datum._id)}
+            {datum.Address},{datum.ImageUrl},{datum.SchoolName}
+          </div>
+        ))}
       </div>
     </>
   );
