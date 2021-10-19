@@ -17,9 +17,26 @@ function schoolDetailReducer(state = initialSchoolName, action) {
   }
 }
 
+const initialDescription = {
+  Description: [],
+};
+
+function schoolDescriptionReducer(state = initialDescription, action) {
+  switch (action.type) {
+    case "UPDATE_DESCRIPTION":
+      return {
+        ...state,
+        Description: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
 // combining all reducers to one
 const rootReducers = combineReducers({
   schoolDetailReducer,
+  schoolDescriptionReducer,
 });
 
 export default rootReducers;

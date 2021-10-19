@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import {
   updateSchoolName,
-  updateSchoollogo,
+  updateAdminWords,
 } from "../Data/actions/schooldetailsaction";
 
 const WelcomeTitle = "Welcome To Gyansudha English School";
@@ -19,13 +19,38 @@ function Body() {
       Schooldetails: rootReducers.schoolDetailReducer.Schooldetails,
     };
   });
+  const description = useSelector(function (rootReducers) {
+    return {
+      AdminWords: rootReducers.schoolDescriptionReducer.Description,
+    };
+  });
 
   const dispatch = useDispatch();
+
+  const adminwords = async () => {
+    const response = await fetch(
+      "http://localhost:8080/description/getdescription",
+      { method: "GET" }
+    )
+      .then((adminwordsstatus) => {
+        if (adminwordsstatus.status !== 200) {
+          alert("Failed to fetch the description");
+        }
+        return adminwordsstatus.json();
+      })
+      .then((adminwordsdata) => {
+        console.log(adminwordsdata.description);
+        dispatch(updateAdminWords(adminwordsdata.description));
+      })
+      .catch((err) => {
+        console.log("Err :", err);
+      });
+  };
 
   const fetchdata = async () => {
     const response = await fetch(
       "http://localhost:8080/schooldetails/details",
-      { method: "GET" }
+      { method: "GET", headers: { "Content-Type": "application/json" } }
     )
       .then((responsestatus) => {
         if (responsestatus.status !== 200) {
@@ -45,6 +70,7 @@ function Body() {
 
   useEffect(() => {
     fetchdata();
+    adminwords();
   }, []);
 
   const [size, setSize] = useState(true);
@@ -110,6 +136,18 @@ function Body() {
         <div className="content">
           <Cards />
         </div>
+
+        {console.log(description.AdminWords)}
+        {description.AdminWords.map((desc, idx) => (
+          <div key={idx}>
+            {desc.Designation} {desc.ImageUrl}
+            <br></br>
+            {desc.Description}
+            <br></br>
+            {desc.Name}
+          </div>
+        ))}
+
         {console.log(details.Schooldetails)}
         {details.Schooldetails.map((datum, idex) => (
           <div key={idex}>

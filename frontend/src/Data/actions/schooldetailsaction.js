@@ -5,3 +5,10 @@ export const updateSchoolName = (details) => {
     payload: details,
   };
 };
+
+export const updateAdminWords = (description) => {
+  return {
+    type: "UPDATE_DESCRIPTION",
+    payload: description,
+  };
+};

@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { getToken, getUser, removeUserSession } from "../../utils/Common";
 import styled from "styled-components";
-import Modals from "../../utils/EntryBox";
+import SchoolDetailsModal from "../../utils/PopupContainer/SchoolDetailsModal";
+import AdminWordsModal from "../../utils/PopupContainer/AdminWords";
 
 function AdminPage(props) {
-  const [button, setButton] = useState(false);
+  const [button, setButton] = useState("");
   const [showModals, setShowModals] = useState(false);
+  // const [modalname, setModalName] = useState("");
 
   const user = getUser();
 
@@ -14,9 +16,14 @@ function AdminPage(props) {
     props.history.push("/adminlogin");
   };
 
-  const AddPost = () => {
+  const Addschooldetails = () => {
     setShowModals((prev) => !prev);
-    setButton(true);
+    setButton("Schooldetails");
+  };
+
+  const Addadminwords = () => {
+    setShowModals((prev) => !prev);
+    setButton("Admin Words");
   };
 
   return (
@@ -29,9 +36,26 @@ function AdminPage(props) {
 
       <br />
 
-      <button onClick={AddPost}> Add Post </button>
-      {button ? (
-        <Modals showModals={showModals} setShowModals={setShowModals} />
+      <button onClick={Addschooldetails}> Add School Details </button>
+
+      {button === "Schooldetails" ? (
+        <SchoolDetailsModal
+          showModals={showModals}
+          setShowModals={setShowModals}
+        />
+      ) : null}
+
+      <br />
+      <br />
+      <br />
+
+      <button onClick={Addadminwords}> Add Admin Words </button>
+
+      {button === "Admin Words" ? (
+        <AdminWordsModal
+          showModals={showModals}
+          setShowModals={setShowModals}
+        />
       ) : null}
     </div>
   );

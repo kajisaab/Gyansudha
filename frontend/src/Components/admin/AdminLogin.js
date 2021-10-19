@@ -21,59 +21,6 @@ function AdminLogin(props) {
     setShowModal((prev) => !prev);
   };
 
-  // const formik = useFormik({
-  //   initialValues: { email: "", password: "" },
-  //   validateOnBlur: true,
-  // validationSchema: validationSchema,
-  //   submit: async (values) => {
-  //     console.log("submit Clicked");
-  //     const data = {
-  //       email: values.email,
-  //       password: values.password,
-  //     };
-  //     setauthLoading(true);
-  //     const respone = await axios
-  //       .post("http://localhost:8080/login/login", data, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       })
-  //       .then(
-  //         (res) => {
-  //           if (res.status === 422) {
-  //             throw new Error("Validation Failde");
-  //           }
-  //           if (res.status !== 200 && res.status !== 201) {
-  //             console.log("Error");
-  //             throw new Error("Could not authenticate you !");
-  //           }
-  //           return res.json();
-  //         },
-  //         alert("This data is submitting"),
-  //         console.log("this is the login data")
-  //       )
-  //       .then((resData) => {
-  //         console.log(resultdata);
-  //         setauthLoading(false);
-  //         setUserId(resultdata.userId);
-  //         setToken(resultdata.tokne);
-  //         localStorage.setItem("token", resultdata.token);
-  //         localStorage.setItem("userId", resultdata.userId);
-  //         const remaininiMillisecond = 60 * 60 * 100;
-  //         console.log("here working");
-  //         const expriyDate = new Date(
-  //           new Date().getTime() + remaininiMillisecond
-  //         );
-  //         history.push("/AdminPage");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setauthLoading(false);
-  //         alert("There error occurred  ", err);
-  //       });
-  //   },
-  // });
-
   const validationSchema = yup.object({
     email: yup.string().required("Required"),
     password: yup.string().required("Required"),
